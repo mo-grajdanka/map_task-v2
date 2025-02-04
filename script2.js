@@ -1546,11 +1546,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     waitForElement("#zone-section-Ордера", (sourceSection) => {
         console.log("Исходная секция найдена:", sourceSection);
-
+    
         const targetSelector = "#subgroup-content-Развитие_территории-Ремонт-Открытые_ордера";
         waitForElement(targetSelector, (targetSection) => {
             console.log("Целевая секция найдена:", targetSection);
-
+    
             // Перемещаем элементы
             const itemsToMove = sourceSection.querySelectorAll(".category-title, .order, .subgroup");
             if (itemsToMove.length === 0) {
@@ -1559,15 +1559,23 @@ document.addEventListener("DOMContentLoaded", function () {
                 itemsToMove.forEach((item) => {
                     targetSection.appendChild(item);
                 });
-
-                // Обновляем счетчик в целевой секции
-                const countElement = document.querySelector("#subgroup-count-Развитие_территории-Ремонт-Открытые_ордера");
-                if (countElement) {
-                    countElement.textContent = itemsToMove.length.toString();
+    
+                // Обновляем счётчик внутри целевой секции
+                const extraCountElement = document.querySelector("#subgroup-count-Развитие_территории-Ремонт-Открытые_ордера");
+                if (extraCountElement) {
+                    extraCountElement.textContent = itemsToMove.length.toString();
                 }
+                
+                // обновляем счётчик внутри группы
+                const groupCountElement = document.getElementById("group-count-Развитие_территории-Ремонт");
+                if (groupCountElement) {
+                    // Здесь берём количество перенесённых элементов
+                    groupCountElement.textContent = itemsToMove.length.toString();
+                }
+                
                 console.log("Элементы успешно перемещены.");
             }
-
+    
             // Скрываем исходную секцию
             sourceSection.style.display = "none";
             console.log("Исходная секция скрыта.");
